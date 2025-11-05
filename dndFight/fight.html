@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎲 Рубилово D&D 🎲</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>🎲 Рубилово Dungeons & Dragons 🎲</h1>
+        <p>Победи врага с помощью силы твоей!</p>
+        <a href="../Home.html" class="home-button">На главный холл</a>
+    </header>
+
+    <main class="battle-arena">
+        <div class="player-box">
+            <h2>Я</h2>
+            <div class="dice-container" id="player-dice"></div>
+            <p class="score">Сила: <span id="player-score">0</span></p>
+        </div>
+    
+        <div class="vs">⚔️</div>
+    
+        <div class="enemy-box">
+            <h2>Монстр</h2>
+            <div class="dice-container" id="enemy-dice"></div>
+            <p class="score">Сила: <span id="enemy-score">0</span></p>
+        </div>
+    </main>
+
+    <section class="fighters-section">
+        <button id="toggle-table" class="toggle-btn">📜 Показать таблицу сил</button>
+        <table id="fighters-table" class="fighters-table hidden">
+          <thead>
+            <tr>
+              <th>Боец</th>
+              <th>Сила</th>
+            </tr>
+          </thead>
+          <tbody id="fighters-body"></tbody>
+        </table>
+      </section>
+
+    <section class="controls">
+        <button id="roll-btn">Броситься в бой!</button>
+        <p id="result-text"></p>
+
+        <div class="counter">
+            <p>🏆 Победы: <span id="wins">0</span></p>
+            <p>💀 Поражения: <span id="losses">0</span></p>
+            <button id="reset-btn">Сбросить счёт</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 D&D Portal by RiVaS. Пусть рак кубов вас не настигнет.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

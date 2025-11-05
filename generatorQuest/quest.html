@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎲 Генератор Квестов 🎲</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>🎲 Генератор квестов Dungeons & Dragons 🎲</h1>
+        <p>Создай уникальный придурковатый квест!</p>
+        <a href="../Home.html" class="home-button">На главный холл</a>
+    </header>
+
+    <main>
+        <section class="generator-section">
+            <h2>Создай квест!</h2>
+            <div class="generator-box">
+                <div>
+                    <label for="quest-giver">Выбери квестодателя:</label>
+                    <select id="quest-giver">
+                        <option value="">— выбери —</option>
+                        <option value="мэр города">Мэр города</option>
+                        <option value="староста деревни">Староста деревни</option>
+                        <option value="бармен">Бармен</option>
+                        <option value="жрица">Жрица</option>
+                        <option value="торговец">Торговец</option>
+                        <option value="вор">Вор</option>
+                        <option value="волшебник">Волшебник</option>
+                    </select>
+                </div>
+            
+                <div>
+                    <button id="generate-quest">Сгенерировать квест</button>
+                </div>
+            
+                <div class="result">
+                    <p><strong>Квестодатель:</strong> <span id="quest-employer">—</span></p>
+                    <p><strong>Ключевое дело:</strong> <span id="quest-object">—</span></p>
+                    <p><strong>Где:</strong> <span id="quest-place">—</span></p>
+                    <p><strong>Доп условия:</strong> <span id="quest-conditions">—</span></p>
+                    <p><strong>Награда:</strong> <span id="quest-reward">—</span></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <h2>О генераторе</h2>
+            <p>Этот сайт создан для мастеров, которым нужно быстро придумать квест. Все результаты случайны, но вдохновлены классикой Dungeons & Dragons.</p>
+            <p>Используй генератор, чтобы создавать придурчевые квесты!</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 D&D Portal by RiVaS. Пусть рак кубов вас не настигнет.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
