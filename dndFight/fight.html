@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎲 Рубилово D&D 🎲</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>🎲 Рубилово D&D 🎲</h1>
+        <p>Новая битва в стиле Cult of the Lamb!</p>
+        <a href="../index.html" class="home-button">На главный холл</a>
+    </header>
+
+    <main class="game-container">
+        <!-- Противник -->
+        <div class="player-board enemy-board">
+            <h2>👹 Противник</h2>
+            <div class="board" id="enemy-board"></div>
+            <div class="score-board">
+                <p>Счёт: <span id="enemy-total-score">0</span></p>
+                <div class="column-scores" id="enemy-column-scores"></div>
+            </div>
+        </div>
+
+        <!-- Центр управления -->
+        <div class="game-center">
+            <div class="dice-controls">
+                <div class="current-dice" id="current-dice">?</div>
+                <p>Кубик: <span id="current-dice-value">-</span></p>
+                <button id="roll-dice" class="action-btn">Бросить</button>
+            </div>
+            
+            <div class="turn-info">
+                <p id="turn-text">Ход: <span id="current-player">Игрок</span></p>
+            </div>
+
+            <div class="quick-stats">
+                <p>🎯 <span id="wins">0</span></p>
+                <p>💀 <span id="losses">0</span></p>
+                <button id="new-game" class="small-btn">Новая игра</button>
+            </div>
+        </div>
+
+        <!-- Игрок -->
+        <div class="player-board player-board">
+            <h2>Я</h2>
+            <div class="board" id="player-board"></div>
+            <div class="score-board">
+                <p>Счёт: <span id="player-total-score">0</span></p>
+                <div class="column-scores" id="player-column-scores"></div>
+            </div>
+        </div>
+    </main>
+
+    <section class="game-footer">
+        <button id="toggle-rules" class="toggle-btn">📜 Правила</button>
+        <div id="rules-panel" class="rules-panel hidden">
+            <h3>Правила битвы:</h3>
+            <ul>
+                <li>🎲 Бросай кубик и размещай в свою колонку</li>
+                <li>🚫 Заполненная колонка закрыта</li>
+                <li>💥 2 одинаковых = (N+N)×2 очков</li>
+                <li>🔥 3 одинаковых = (N+N+N)×3 очков</li>
+                <li>⚔️ Твой кубик уничтожает такие же у врага</li>
+                <li>🏆 Игра до заполнения доски!</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 D&D Portal by RiVaS. Пусть рак кубов вас не настигнет.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
