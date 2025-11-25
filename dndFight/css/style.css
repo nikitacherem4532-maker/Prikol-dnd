@@ -31,18 +31,25 @@ header h1 {
     margin: 0 0 8px 0;
     color: #f5e7a1;
     text-shadow: 0 0 8px #c79a3a; /* Свечение текста */
+    min-height: 1.4em; /* Фиксированная высота текста */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 header p {
     color: #d9c97c; /* Светло-золотой цвет */
     font-size: 1rem;
     margin: 0;
+    min-height: 1.2em; /* Фиксированная высота текста */
 }
 
 /* ===== КНОПКА "НА ГЛАВНЫЙ ХОЛЛ" ===== */
 .home-button {
-    display: inline-block;
-    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
     background: #4a3d2f; /* Тёмно-коричневый */
     color: #f5e9c8;
     text-decoration: none;
@@ -50,6 +57,10 @@ header p {
     font-size: 14px;
     transition: 0.2s; /* Плавные переходы */
     border: 1px solid #c2b28a;
+    min-height: 40px; /* Фиксированная высота */
+    min-width: 160px; /* Фиксированная ширина */
+    white-space: nowrap; /* Запрет переноса текста */
+    font-weight: 600;
 }
 
 .home-button:hover {
@@ -67,6 +78,7 @@ header p {
     max-width: 900px; /* Ограничиваем ширину на больших экранах */
     margin: 0 auto; /* Центрируем */
     flex: 1; /* Растягиваем на всё доступное пространство */
+    min-height: 500px; /* Минимальная высота контейнера */
 }
 
 /* ===== ИГРОВЫЕ ДОСКИ (ИГРОК И ПРОТИВНИК) ===== */
@@ -77,6 +89,9 @@ header p {
     padding: 15px;
     width: 220px; /* Фиксированная ширина для компактности */
     box-shadow: 0 0 15px rgba(255, 215, 100, 0.15); /* Золотое свечение */
+    min-height: 400px; /* Фиксированная минимальная высота */
+    display: flex;
+    flex-direction: column;
 }
 
 .player-board h2 {
@@ -84,6 +99,10 @@ header p {
     margin: 0 0 12px 0;
     font-size: 1.3rem;
     text-shadow: 0 0 5px rgba(199, 154, 58, 0.5); /* Лёгкое свечение */
+    min-height: 1.8em; /* Фиксированная высота заголовка */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* ===== ИГРОВОЕ ПОЛЕ 3x3 ===== */
@@ -92,12 +111,14 @@ header p {
     gap: 8px;
     justify-content: center;
     margin: 15px 0;
+    min-height: 155px; /* Фиксированная высота игрового поля */
 }
 
 .column {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    min-height: 155px; /* Фиксированная высота колонки */
 }
 
 .column.column-full {
@@ -116,6 +137,7 @@ header p {
     justify-content: center;
     font-size: 1.4rem; /* Крупные эмодзи кубиков */
     transition: all 0.2s ease; /* Плавные анимации */
+    flex-shrink: 0; /* Запрет сжатия */
 }
 
 .cell.empty {
@@ -140,14 +162,21 @@ header p {
     align-items: center;
     gap: 15px;
     padding: 15px;
-    min-width: 140px; /* Минимальная ширина */
+    min-width: 160px;/* Увеличил минимальную ширину */
+    min-height: 300px;/* Фиксированная минимальная высота */
+    justify-content: center;
+    flex-shrink: 0; /* Важно: запрещаем сжатие */
 }
-
+/* ===== БЛОК КУБИКА И КНОПКИ ===== */
 .dice-controls {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
+    min-height: 140px;
+    justify-content: center;
+    width: 100%; /* Фиксируем ширину */
+    max-width: 150px; /* Ограничиваем максимальную ширину */
 }
 
 /* ===== ТЕКУЩИЙ КУБИК ===== */
@@ -163,6 +192,7 @@ header p {
     font-weight: bold;
     color: #2e1a09; /* Тёмный текст для контраста */
     border: 2px solid #ffd700; /* Яркая золотая рамка */
+    flex-shrink: 0; /* Запрет сжатия */
 }
 
 /* ===== АНИМАЦИЯ БРОСКА КУБИКА ===== */
@@ -181,13 +211,18 @@ header p {
     background: #c79a3a;
     color: #2e1a09;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 20px;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.2s ease;
     width: 100%; /* Занимает всю ширину контейнера */
+    min-height: 44px; /* Фиксированная высота для тач-интерфейсов */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap; /* Запрет переноса текста */
 }
 
 .action-btn:hover:not(:disabled) {
@@ -206,11 +241,17 @@ header p {
     background: #5a4a32;
     color: #f5e9c8;
     border: 1px solid #c79a3a;
-    padding: 6px 12px;
+    padding: 8px 16px;
     border-radius: 6px;
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.2s ease;
+    min-height: 36px; /* Фиксированная высота */
+    min-width: 120px; /* Фиксированная ширина */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap; /* Запрет переноса текста */
 }
 
 .small-btn:hover {
@@ -224,12 +265,17 @@ header p {
     background: rgba(40, 20, 5, 0.8); /* Тёмный фон */
     border-radius: 8px;
     border: 1px solid #c79a3a;
+    min-height: 80px; /* Фиксированная высота */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .score-board p {
     font-size: 1rem;
     margin: 5px 0;
     color: #ffd700; /* Золотой цвет счёта */
+    min-height: 1.2em; /* Фиксированная высота текста */
 }
 
 .column-scores {
@@ -238,6 +284,7 @@ header p {
     margin-top: 8px;
     font-size: 0.8rem;
     gap: 5px;
+    min-height: 25px; /* Фиксированная высота */
 }
 
 .column-score {
@@ -246,6 +293,10 @@ header p {
     border-radius: 4px;
     flex: 1; /* Равномерное распределение */
     font-size: 0.75rem;
+    min-height: 20px; /* Фиксированная высота */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* ===== НИЖНЯЯ ПАНЕЛЬ УПРАВЛЕНИЯ ===== */
@@ -255,6 +306,7 @@ header p {
     align-items: center;
     padding: 15px 20px; /* Отступы по бокам */
     margin-top: 10px;
+    min-height: 80px; /* Фиксированная высота */
 }
 
 .toggle-btn {
@@ -262,10 +314,17 @@ header p {
     border: 1px solid #c79a3a;
     color: #f5e9c8;
     border-radius: 6px;
-    padding: 8px 15px;
+    padding: 10px 20px;
     cursor: pointer;
     font-size: 0.9rem;
     transition: all 0.2s ease;
+    min-height: 40px; /* Фиксированная высота */
+    min-width: 140px; /* Фиксированная ширина */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap; /* Запрет переноса текста */
+    font-weight: 600;
 }
 
 .toggle-btn:hover {
@@ -282,6 +341,7 @@ header p {
     border: 1px solid #c79a3a;
     max-width: 400px;
     font-size: 0.9rem;
+    min-height: 200px; /* Фиксированная высота */
 }
 
 .rules-panel h3 {
@@ -289,6 +349,10 @@ header p {
     text-align: center;
     margin: 0 0 10px 0;
     font-size: 1.1rem;
+    min-height: 1.4em; /* Фиксированная высота */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .rules-panel ul {
@@ -299,6 +363,7 @@ header p {
 .rules-panel li {
     margin: 5px 0;
     line-height: 1.3;
+    min-height: 1.4em; /* Фиксированная высота строк */
 }
 
 /* ===== БЫСТРАЯ СТАТИСТИКА ===== */
@@ -308,32 +373,66 @@ header p {
     align-items: center;
     gap: 5px;
     font-size: 0.9rem;
+    min-height: 80px; /* Фиксированная высота */
+    justify-content: center;
 }
 
 .quick-stats p {
     margin: 2px 0;
+    min-height: 1.2em; /* Фиксированная высота текста */
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 /* ===== ИНДИКАТОР ХОДА ===== */
 .turn-info {
-    background: rgba(199, 154, 58, 0.15); /* Светлый золотой фон */
-    padding: 8px 12px;
+    background: rgba(199, 154, 58, 0.15);
+    padding: 12px 16px;
     border-radius: 6px;
     border: 1px solid #c79a3a;
+    height: 60px; /* Фиксированная высота */
+    width: 180px; /* Фиксированная ширина */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Запрещаем сжатие */
+    text-align: center;
+    box-sizing: border-box;
 }
 
 .turn-info p {
     margin: 0;
     font-size: 0.9rem;
     color: #ffd700;
+    min-height: 1.2em; /* Фиксированная высота текста */
+    white-space: nowrap; /* Запрет переноса текста */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 
 .dice-controls p {
     margin: 0;
     font-size: 0.9rem;
     color: #d9c97c;
+    min-height: 1.2em; /* Фиксированная высота текста */
+    white-space: nowrap;
+    text-align: center;
+    width: 100%;
 }
 
+#turn-text {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+#current-player {
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
 /* ===== СКРЫТЫЕ ЭЛЕМЕНТЫ ===== */
 .hidden {
     display: none;
@@ -370,6 +469,10 @@ footer {
     border-top: 2px solid #c79a3a;
     font-size: 0.8rem;
     width: 100%; /* Растягиваем на всю ширину */
+    min-height: 60px; /* Фиксированная высота */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* ===== СТИЛИ ДЛЯ КОМБО-КОМБИНАЦИЙ ===== */
@@ -400,11 +503,13 @@ footer {
         flex-direction: column; /* Вертикальное расположение */
         gap: 15px;
         padding: 15px 10px; /* Меньшие отступы */
+        min-height: auto; /* Убираем фиксированную высоту на мобильных */
     }
     
     .player-board {
         width: 100%;
         max-width: 280px; /* Ограничение ширины */
+        min-height: 350px; /* Уменьшаем высоту для мобильных */
     }
     
     .game-center {
@@ -412,13 +517,31 @@ footer {
         justify-content: space-around;
         width: 100%;
         max-width: 400px;
+        min-height: 150px; /* Меньшая высота на мобильных */
+        flex-wrap: wrap;
     }
     
     header h1 {
         font-size: 1.5rem; /* Меньший размер заголовка */
+        min-height: 1.3em; /* Соответствующая высота */
     }
     
     header p {
+        font-size: 0.9rem;
+        min-height: 1.1em;
+    }
+    
+    .dice-controls {
+        min-height: 120px; /* Меньшая высота на мобильных */
+    }
+    
+    .turn-info {
+        height: 50px;
+        width: 160px;
+        padding: 10px 12px;
+    }
+    
+    .turn-info p {
         font-size: 0.9rem;
     }
 }
@@ -439,5 +562,27 @@ footer {
     
     .game-center {
         flex-wrap: wrap; /* Перенос элементов при нехватке места */
+        gap: 10px;
+    }
+    
+    .action-btn, .small-btn, .home-button, .toggle-btn {
+        min-height: 48px; /* Увеличиваем для удобства тапа */
+        font-size: 16px; /* Минимальный размер для iOS */
+    }
+    
+    .board {
+        min-height: 140px; /* Соответствующая высота для меньших ячеек */
+    }
+    
+    .column {
+        min-height: 140px;
+    }
+    .turn-info {
+        height: 45px;
+        width: 140px;
+        padding: 8px 10px;
+    }
+    .turn-info p {
+        font-size: 0.85rem;
     }
 }
