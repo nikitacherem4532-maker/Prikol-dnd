@@ -1,11 +1,14 @@
+/* Основные сбросы */
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
+/* Основные стили тела */
 body {
     font-family: 'Georgia', serif;
-    margin: 0;
-    padding: 0;
+    line-height: 1.6;
     background: radial-gradient(circle at top, #2e2b2b, #0e0c0c);
     color: #e8dcb8;
     min-height: 100vh;
@@ -13,34 +16,17 @@ body {
     flex-direction: column;
 }
 
-.home-button {
-    display: inline-block;
-    padding: 10px 18px;
-    background: #4a3d2f;
-    color: #f5e9c8;
-    text-decoration: none;
-    border-radius: 8px;
-    font-family: 'Georgia', serif;
-    font-size: 16px;
-    transition: 0.2s;
-    border: 1px solid #c2b28a;
-}
-
-.home-button:hover {
-    background: #6a5643;
-    transform: translateY(-2px);
-}
-
+/* Шапка */
 header {
     text-align: center;
-    padding: 40px 20px;
+    padding: 30px 20px;
     background: linear-gradient(135deg, #5b2c00, #2e1a09);
     border-bottom: 3px solid #c79a3a;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 header h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-bottom: 10px;
     color: #f5e7a1;
     text-shadow: 0 0 10px #c79a3a;
@@ -48,193 +34,419 @@ header h1 {
 
 header p {
     color: #d9c97c;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
 }
 
+/* Кнопка домой */
+.home-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #4a3d2f;
+    color: #f5e9c8;
+    text-decoration: none;
+    border-radius: 8px;
+    font-family: 'Georgia', serif;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: 1px solid #c2b28a;
+    margin-top: 10px;
+}
+
+.home-button:hover {
+    background: #6a5643;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Основное содержимое */
 main {
-    flex-grow: 1;
+    flex: 1;
     max-width: 900px;
-    margin: 40px auto;
-    padding: 0 20px;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
 }
 
+/* Секция генератора */
 .generator-section {
     background: rgba(46, 28, 10, 0.9);
     border: 2px solid #c79a3a;
     border-radius: 20px;
-    padding: 30px;
+    padding: 25px;
+    margin-bottom: 30px;
     box-shadow: 0 0 20px rgba(255, 215, 100, 0.1);
-    text-align: center;
-    margin-bottom: 40px;
 }
 
 .generator-section h2 {
     color: #f5e7a1;
-    margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 25px;
     font-size: 1.8rem;
+    text-shadow: 0 0 5px rgba(199, 154, 58, 0.5);
 }
 
+/* Контейнер генератора */
+.generator-box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Кнопка генерации */
 #generate-items {
-	margin: 5px 0;
     background: #c79a3a;
     color: #2e1a09;
     border: none;
-    padding: 15px 30px;
-    border-radius: 12px;
-    font-size: 1.1rem;
+    padding: 18px 40px;
+    border-radius: 15px;
+    font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
+    font-family: 'Georgia', serif;
+    margin: 10px 0;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    min-width: 280px;
+    position: relative;
+    overflow: hidden;
 }
 
 #generate-items:hover {
     background: #e0b94a;
-    transform: scale(1.05);
-    box-shadow: 0 0 15px #c79a3a;
+    box-shadow: 0 8px 15px rgba(199, 154, 58, 0.4);
 }
 
+#generate-items:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px 5px rgba(199, 154, 58, 0.3);
+}
+
+#generate-items .dice {
+    font-size: 1.5rem;
+    animation: diceBounce 2s ease-in-out infinite;
+}
+
+@keyframes diceBounce {
+    0%, 100% { 
+        transform: translateY(0) rotate(0deg); 
+    }
+    25% { 
+        transform: translateY(-4px) rotate(90deg); 
+    }
+    50% { 
+        transform: translateY(0) rotate(180deg); 
+    }
+    75% { 
+        transform: translateY(-4px) rotate(270deg); 
+    }
+}
+
+/* Результат генерации */
 .result {
-    margin-top: 25px;
-    text-align: left;
     background: rgba(0, 0, 0, 0.4);
-    border-radius: 10px;
-    padding: 15px 25px;
-    display: inline-block;
-}
-
-.result p {
-    font-size: 1.2rem;
-    margin: 10px 0;
-}
-
-.info-section {
-    text-align: center;
-    line-height: 1.6;
-    background: rgba(20, 15, 10, 0.8);
+    border-radius: 20px;
     padding: 30px;
-    border-radius: 15px;
-    border: 1px solid #c79a3a;
+    width: 100%;
+    max-width: 700px;
+    margin-top: 20px;
+    border: 1px solid rgba(199, 154, 58, 0.3);
+    min-height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-footer {
-    text-align: center;
-    padding: 15px 10px;
-    background: #1a1105;
-    color: #d9c97c;
-    font-weight: 600;
-    border-top: 2px solid #c79a3a;
+/* Отображение предмета */
+.item-display {
+    opacity: 1;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 100%;
 }
 
-label[for="quest-giver"] {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 1.2rem;
-    color: #f5e7a1;
-    text-shadow: 0 0 5px rgba(199, 154, 58, 0.6);
-}
-
-#magical-items {
-    background: #3c2a15;
-    color: #f5e7a1;
-    border: 2px solid #c79a3a;
-    border-radius: 10px;
-    padding: 10px 15px;
-    font-size: 1rem;
-    font-family: 'Georgia', serif;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
-    margin-bottom: 15px;
-    min-width: 220px;
-}
-
-#magical-items:hover {
-    background: #52361b;
-    box-shadow: 0 0 10px rgba(199, 154, 58, 0.3);
-}
-
-#magical-items:focus {
-    outline: none;
-    border-color: #e0b94a;
-    box-shadow: 0 0 15px rgba(199, 154, 58, 0.7);
-}
-
-/* Стили для генератора магических предметов */
+/* Заголовок предмета */
 .item-header {
     text-align: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
     border-bottom: 2px solid #c79a3a;
+    position: relative;
+}
+
+.item-header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #c79a3a, transparent);
 }
 
 .item-header h3 {
     color: #f5e7a1;
-    font-size: 1.8rem;
-    margin: 0 0 10px 0;
+    font-size: 2rem;
+    margin-bottom: 10px;
     text-shadow: 0 0 10px rgba(199, 154, 58, 0.5);
+    line-height: 1.3;
+    word-wrap: break-word;
+    padding: 0 10px;
 }
 
-.item-rarity {
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin: 0;
-    padding: 5px 15px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 20px;
-    display: inline-block;
-}
-
+/* Детали предмета */
 .item-details {
-    text-align: left;
+    text-align: center;
+    padding: 25px 20px;
+    background: rgba(60, 42, 21, 0.5);
+    border-radius: 15px;
+    border-left: 4px solid #c79a3a;
+    position: relative;
+    overflow: hidden;
 }
 
-.item-details p {
-    font-size: 1.1rem;
-    margin: 12px 0;
-    line-height: 1.5;
+.item-details::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #c79a3a, transparent);
 }
 
-.item-details strong {
+#item-effect {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #e8dcb8;
+    font-style: italic;
+    padding: 20px;
+    margin: 0;
+    background: rgba(30, 20, 10, 0.3);
+    border-radius: 10px;
+    border: 1px dashed #c79a3a55;
+    transition: all 0.5s ease;
+}
+
+#item-effect.text-glow {
+    animation: textGlow 1s ease-in-out;
+    box-shadow: 0 0 20px rgba(199, 154, 58, 0.3);
+}
+
+@keyframes textGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(199, 154, 58, 0.2);
+        transform: scale(0.95);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(199, 154, 58, 0.5);
+        transform: scale(1.02);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(199, 154, 58, 0.3);
+        transform: scale(1);
+    }
+}
+
+/* Информационная секция */
+.info-section {
+    background: rgba(20, 15, 10, 0.8);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid #c79a3a;
+    text-align: center;
+}
+
+.info-section h2 {
     color: #f5e7a1;
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+}
+
+.info-section p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+    color: #d9c97c;
+}
+
+/* Подвал */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #1a1105;
+    color: #d9c97c;
+    font-size: 0.9rem;
+    border-top: 2px solid #c79a3a;
+    margin-top: 30px;
 }
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
-    .item-header h3 {
-        font-size: 1.5rem;
+    header h1 {
+        font-size: 1.6rem;
     }
     
-    .item-details p {
+    header p {
         font-size: 1rem;
     }
     
     .generator-section {
+        padding: 20px 15px;
+        border-radius: 15px;
+    }
+    
+    .generator-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    #generate-items {
+        width: 100%;
+        padding: 16px 20px;
+        font-size: 1.1rem;
+        min-width: auto;
+    }
+    
+    .result {
         padding: 20px;
+        border-radius: 15px;
+        min-height: 220px;
+    }
+    
+    .item-header h3 {
+        font-size: 1.6rem;
+    }
+    
+    #item-effect {
+        font-size: 1.1rem;
+        padding: 15px;
+    }
+    
+    .info-section {
+        padding: 20px 15px;
+    }
+    
+    .info-section h2 {
+        font-size: 1.4rem;
     }
 }
 
-#rarity-select {
-    background: #3c2a15;
-    color: #f5e7a1;
-    border: 2px solid #c79a3a;
-    border-radius: 10px;
-    padding: 10px 15px;
-    font-size: 1rem;
-    font-family: 'Georgia', serif;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
-    margin-bottom: 15px;
-    min-width: 220px;
+@media (max-width: 480px) {
+    header {
+        padding: 20px 15px;
+    }
+    
+    header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .home-button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+    
+    main {
+        padding: 15px 10px;
+    }
+    
+    .generator-section {
+        padding: 15px 10px;
+    }
+    
+    .generator-section h2 {
+        font-size: 1.3rem;
+    }
+    
+    #generate-items {
+        padding: 14px 16px;
+        font-size: 1rem;
+        gap: 10px;
+    }
+    
+    .result {
+        padding: 15px;
+        min-height: 200px;
+    }
+    
+    .item-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .item-header {
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
+    
+    #item-effect {
+        font-size: 1rem;
+        padding: 12px;
+    }
+    
+    footer {
+        padding: 15px 10px;
+        font-size: 0.8rem;
+    }
 }
 
-#rarity-select:hover {
-    background: #52361b;
-    box-shadow: 0 0 10px rgba(199, 154, 58, 0.3);
+/* Скроллбар */
+::-webkit-scrollbar {
+    width: 10px;
 }
 
-#rarity-select:focus {
-    outline: none;
-    border-color: #e0b94a;
-    box-shadow: 0 0 15px rgba(199, 154, 58, 0.7);
+::-webkit-scrollbar-track {
+    background: #1a1105;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c79a3a;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #e0b94a;
+}
+
+/* Выделение текста */
+::selection {
+    background: #c79a3a;
+    color: #2e1a09;
+}
+
+::-moz-selection {
+    background: #c79a3a;
+    color: #2e1a09;
+}
+
+/* Эффект частиц (дополнительный декор) */
+.result::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(199, 154, 58, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(199, 154, 58, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.item-display {
+    position: relative;
+    z-index: 1;
+}
+
+/* Эффект для кнопки при клике */
+#generate-items:active .dice {
+    animation: diceSpin 0.3s linear;
+}
+
+@keyframes diceSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
