@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎲 Генератор Персонажей 🎲</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>🎲 Генератор Персонажей Dungeons & Dragons 🎲</h1>
+        <p>Создай уникального героя за одно нажатие!</p>
+        <a href="../index.html" class="home-button">На главный холл</a>
+    </header>
+
+    <main>
+        <section class="generator-section">
+            <h2>Создай своего персонажа</h2>
+            <div class="generator-box">
+                <div class="toggle-container">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="generate-stats-toggle">
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-text">Генерация характеристик</span>
+                    </label>
+                </div>
+                
+                <div class="button-group">
+                    <button id="generate-btn" class="generate-btn">🎲 Сгенерировать</button>
+                </div>
+                
+                <div class="result">
+                    <div class="character-info">
+                        <div class="info-row">
+                            <span class="info-label">Имя:</span>
+                            <span id="char-name" class="result-text">—</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Раса:</span>
+                            <span id="char-race" class="result-text">—</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Класс:</span>
+                            <span id="char-class" class="result-text">—</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Мировоззрение:</span>
+                            <span id="char-alignment" class="result-text">—</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Предыстория:</span>
+                            <span id="char-backstory" class="result-text">—</span>
+                        </div>
+
+                        <hr class="divider-line">
+                        
+                        <div class="info-row">
+                            <span class="info-label">Черты характера:</span>
+                            <span id="feat-character" class="result-text">—</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Идеалы:</span>
+                            <span id="feat-ideal" class="result-text">—</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Привязанности:</span>
+                            <span id="feat-attachment" class="result-text">—</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Слабости:</span>
+                            <span id="feat-weakness" class="result-text">—</span>
+                        </div>
+                    </div>
+                
+                    <hr class="divider-line">
+                    
+                    <div class="stats-container">
+                        <h3>Характеристики: <span id="bonus-indicator" class="bonus-indicator"></span></h3>
+                        <div class="stats-grid">
+                            <div class="stat-item" data-stat="str">
+                                <span class="stat-name">Сила</span>
+                                <span class="stat-value">—</span>
+                                <span class="stat-bonus">+0</span>
+                            </div>
+                            <div class="stat-item" data-stat="dex">
+                                <span class="stat-name">Ловкость</span>
+                                <span class="stat-value">—</span>
+                                <span class="stat-bonus">+0</span>
+                            </div>
+                            <div class="stat-item" data-stat="con">
+                                <span class="stat-name">Телосложение</span>
+                                <span class="stat-value">—</span>
+                                <span class="stat-bonus">+0</span>
+                            </div>
+                            <div class="stat-item" data-stat="int">
+                                <span class="stat-name">Интеллект</span>
+                                <span class="stat-value">—</span>
+                                <span class="stat-bonus">+0</span>
+                            </div>
+                            <div class="stat-item" data-stat="wis">
+                                <span class="stat-name">Мудрость</span>
+                                <span class="stat-value">—</span>
+                                <span class="stat-bonus">+0</span>
+                            </div>
+                            <div class="stat-item" data-stat="cha">
+                                <span class="stat-name">Харизма</span>
+                                <span class="stat-value">—</span>
+                                <span class="stat-bonus">+0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <h2>О генераторе</h2>
+            <p>Этот сайт создан для мастеров и игроков, которым нужно быстро придумать персонажа. Все результаты случайны, но вдохновлены классикой Dungeons & Dragons.</p>
+            <p>Используй генератор, чтобы создавать героев, NPC или даже врагов для своих кампаний!</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 D&D Portal by RiVaS. Пусть рак кубов вас не настигнет.</p>
+    </footer>
+
+    <!-- Подключаем модули -->
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
