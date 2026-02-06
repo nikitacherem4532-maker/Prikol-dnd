@@ -17,6 +17,23 @@ let currentSubrace = null;
 // Для полуэльфа: оставшиеся бонусы для распределения
 let halfElfRemainingBonuses = 0;
 
+// Объект для хранения закрепленных полей
+let lockedFields = {
+    name: { locked: false, value: null },
+    race: { locked: false, value: null },
+    class: { locked: false, value: null },
+    alignment: { locked: false, value: null },
+    backstory: { locked: false, value: null },
+    traits: { locked: false, value: null },
+    ideals: { locked: false, value: null },
+    attachments: { locked: false, value: null },
+    weakness: { locked: false, value: null }
+};
+
+// Счетчик закрепленных полей
+let lockedCount = 0;
+const MAX_LOCKS = 3;
+
 // Вспомогательные функции
 const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
@@ -62,7 +79,7 @@ const updateStatsDisplay = () => {
         if (halfElfRemainingBonuses > 0) {
             bonusIndicator.textContent = `Распределите: +1, +1 (осталось: ${halfElfRemainingBonuses})`;
         } else {
-            bonusIndicator.textContent = `Бонусы распределены. ПКМ венруть бонус`;
+            bonusIndicator.textContent = `Бонусы распределены. Нажмите на характеристику для снятия бонуса`;
         }
         bonusIndicator.style.display = 'inline';
     } else {
@@ -99,7 +116,7 @@ const updateStatsDisplay = () => {
         if (currentRace === "Полуэльф") {
             // Характеристика может быть выбрана, если:
             // 1. Есть оставшиеся бонусы И у характеристики нет расового бонуса (кроме харизмы) И нет игрового бонуса
-            // 2. ИЛИ у характеристики уже есть игровой бонус (для возможности удаления)
+            // 2. ИЛИ у характеристики уже есть игровой бонус (для возможности удаления при повторном нажатии)
             const canAddBonus = halfElfRemainingBonuses > 0 && 
                                stat !== 'cha' && 
                                characterStats[stat].raceBonus === 0 && 
@@ -121,6 +138,133 @@ const updateStatsDisplay = () => {
             }
         } else {
             statItem.classList.remove('selectable', 'with-player-bonus');
+        }
+    }
+};
+
+// Обновление счетчика закрепленных полей
+const updateLockedCounter = () => {
+    const counter = document.getElementById('locked-counter');
+    counter.textContent = `Закреплено: ${lockedCount}/${MAX_LOCKS}`;
+    
+    // Меняем цвет в зависимости от количества закрепленных полей
+    if (lockedCount === MAX_LOCKS) {
+        counter.style.background = 'rgba(199, 154, 58, 0.6)';
+        counter.style.borderColor = '#f5c95a';
+        counter.style.color = '#f5c95a';
+    } else {
+        counter.style.background = 'rgba(199, 154, 58, 0.2)';
+        counter.style.borderColor = '#c79a3a';
+        counter.style.color = '#d9c97c';
+    }
+};
+
+// Закрепление/открепление поля
+const toggleLockField = (field) => {
+    const lockBtn = document.querySelector(`.lock-btn[data-field="${field}"]`);
+    const infoRow = document.querySelector(`.info-row[data-field="${field}"]`);
+    const fieldElement = document.getElementById(getFieldElementId(field));
+    
+    // Если поле уже закреплено - открепляем
+    if (lockedFields[field].locked) {
+        lockedFields[field].locked = false;
+        lockedFields[field].value = null;
+        lockedCount--;
+        
+        lockBtn.classList.remove('locked');
+        lockBtn.textContent = '🔓';
+        lockBtn.title = 'Закрепить это поле';
+        infoRow.classList.remove('locked');
+        
+        console.log(`Поле "${field}" откреплено. Закреплено полей: ${lockedCount}`);
+    } 
+    // Если поле не закреплено и можно закрепить (не превышен лимит)
+    else if (lockedCount < MAX_LOCKS) {
+        lockedFields[field].locked = true;
+        lockedFields[field].value = fieldElement.textContent;
+        lockedCount++;
+        
+        lockBtn.classList.add('locked');
+        lockBtn.textContent = '🔒';
+        lockBtn.title = 'Открепить это поле';
+        infoRow.classList.add('locked');
+        
+        console.log(`Поле "${field}" закреплено со значением: "${fieldElement.textContent}". Закреплено полей: ${lockedCount}`);
+    } 
+    // Если пытаемся закрепить, но лимит исчерпан
+    else {
+        console.log(`Невозможно закрепить поле "${field}". Достигнут лимит в ${MAX_LOCKS} закрепленных полей.`);
+        // Можно добавить визуальную обратную связь, например, анимацию
+        lockBtn.style.animation = 'shake 0.5s';
+        setTimeout(() => {
+            lockBtn.style.animation = '';
+        }, 500);
+        return;
+    }
+    
+    // Обновляем счетчик
+    updateLockedCounter();
+};
+
+// Получение ID элемента по названию поля
+const getFieldElementId = (field) => {
+    switch(field) {
+        case 'name': return 'char-name';
+        case 'race': return 'char-race';
+        case 'class': return 'char-class';
+        case 'alignment': return 'char-alignment';
+        case 'backstory': return 'char-backstory';
+        case 'traits': return 'feat-character';
+        case 'ideals': return 'feat-ideal';
+        case 'attachments': return 'feat-attachment';
+        case 'weakness': return 'feat-weakness';
+        default: return '';
+    }
+};
+
+// Получение названия поля по ID элемента
+const getFieldNameFromId = (id) => {
+    switch(id) {
+        case 'char-name': return 'name';
+        case 'char-race': return 'race';
+        case 'char-class': return 'class';
+        case 'char-alignment': return 'alignment';
+        case 'char-backstory': return 'backstory';
+        case 'feat-character': return 'traits';
+        case 'feat-ideal': return 'ideals';
+        case 'feat-attachment': return 'attachments';
+        case 'feat-weakness': return 'weakness';
+        default: return null;
+    }
+};
+
+// Восстановление закрепленных значений
+const restoreLockedFields = () => {
+    for (const field in lockedFields) {
+        if (lockedFields[field].locked && lockedFields[field].value) {
+            const elementId = getFieldElementId(field);
+            const element = document.getElementById(elementId);
+            
+            if (element) {
+                element.textContent = lockedFields[field].value;
+                
+                // Особый случай: если закреплена раса, нужно обновить currentRace и currentSubrace
+                if (field === 'race') {
+                    // Находим расу по отображаемому значению
+                    const raceValue = lockedFields[field].value;
+                    // Это упрощенная логика - в реальности нужно парсить значение
+                    // Предполагаем, что значение содержит только подрасу
+                    currentSubrace = raceValue;
+                    // Находим основную расу по подрасе
+                    const data = window.characterData;
+                    for (const raceKey in data.races) {
+                        if (data.races[raceKey].subraces.includes(raceValue)) {
+                            currentRace = raceKey;
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 };
@@ -170,10 +314,9 @@ const applyRaceBonuses = () => {
     }
 };
 
-// Обработчик кликов на характеристики
+// Обработчик кликов на характеристики (только левая кнопка мыши)
 const handleStatClick = (event) => {
-    event.preventDefault(); // Предотвращаем стандартное поведение контекстного меню для ПКМ
-    
+    // Используем только левую кнопку мыши
     const statItem = event.currentTarget;
     const stat = statItem.getAttribute('data-stat');
     
@@ -182,31 +325,24 @@ const handleStatClick = (event) => {
     // Проверяем, можно ли взаимодействовать с этой характеристикой
     if (!statItem.classList.contains('selectable') || currentRace !== "Полуэльф") return;
     
-    // ЛКМ - добавить бонус
-    if (event.button === 0) { // Левая кнопка мыши
-        // Проверяем условия для добавления бонуса
-        const canAddBonus = halfElfRemainingBonuses > 0 && 
-                           stat !== 'cha' && 
-                           characterStats[stat].raceBonus === 0 && 
-                           characterStats[stat].playerBonus === 0;
-        
-        if (canAddBonus) {
-            characterStats[stat].playerBonus = 1;
-            halfElfRemainingBonuses--;
-            console.log(`Добавлен бонус +1 к ${stat}. Осталось бонусов: ${halfElfRemainingBonuses}`);
-            updateStatsDisplay();
-        }
+    // Если у характеристики уже есть игровой бонус, снимаем его
+    if (characterStats[stat].playerBonus === 1) {
+        characterStats[stat].playerBonus = 0;
+        halfElfRemainingBonuses++;
+        console.log(`Убран бонус +1 с ${stat}. Осталось бонусов: ${halfElfRemainingBonuses}`);
+    } 
+    // Если нет игрового бонуса, но можно добавить
+    else if (halfElfRemainingBonuses > 0 && 
+             stat !== 'cha' && 
+             characterStats[stat].raceBonus === 0 && 
+             characterStats[stat].playerBonus === 0) {
+        characterStats[stat].playerBonus = 1;
+        halfElfRemainingBonuses--;
+        console.log(`Добавлен бонус +1 к ${stat}. Осталось бонусов: ${halfElfRemainingBonuses}`);
     }
-    // ПКМ - убрать бонус
-    else if (event.button === 2) { // Правая кнопка мыши
-        // Проверяем условия для удаления бонуса
-        if (characterStats[stat].playerBonus === 1) {
-            characterStats[stat].playerBonus = 0;
-            halfElfRemainingBonuses++;
-            console.log(`Убран бонус +1 с ${stat}. Осталось бонусов: ${halfElfRemainingBonuses}`);
-            updateStatsDisplay();
-        }
-    }
+    
+    // Обновляем отображение
+    updateStatsDisplay();
 };
 
 // Генерация характеристик
@@ -218,6 +354,11 @@ const generateStats = () => {
 
 // Генерация расы с учетом баланса
 const generateRace = () => {
+    // Если раса закреплена, возвращаем закрепленное значение
+    if (lockedFields.race.locked && lockedFields.race.value) {
+        return lockedFields.race.value;
+    }
+    
     const data = window.characterData;
     const raceKeys = Object.keys(data.races);
     const randomRaceKey = getRandomElement(raceKeys);
@@ -233,6 +374,11 @@ const generateRace = () => {
 
 // Генерация класса с учетом баланса
 const generateClass = () => {
+    // Если класс закреплен, возвращаем закрепленное значение
+    if (lockedFields.class.locked && lockedFields.class.value) {
+        return lockedFields.class.value;
+    }
+    
     const data = window.characterData;
     const classKeys = Object.keys(data.classes);
     const randomClassKey = getRandomElement(classKeys);
@@ -241,13 +387,39 @@ const generateClass = () => {
     return `${randomClassKey} (${subclass})`;
 };
 
+// Генерация случайного элемента с учетом закрепленных полей
+const generateField = (field, dataArray) => {
+    // Если поле закреплено, возвращаем закрепленное значение
+    if (lockedFields[field].locked && lockedFields[field].value) {
+        return lockedFields[field].value;
+    }
+    
+    return getRandomElement(dataArray);
+};
+
+// Генерация черт характера (3 случайные без повторов)
+const generateTraits = () => {
+    // Если черты закреплены, возвращаем закрепленное значение
+    if (lockedFields.traits.locked && lockedFields.traits.value) {
+        return lockedFields.traits.value;
+    }
+    
+    const data = window.characterData;
+    const shuffledTraits = [...data.characterTraits].sort(() => 0.5 - Math.random());
+    return shuffledTraits.slice(0, 3).join(", ");
+};
+
 // Анимация генерации
 const animateGeneration = () => {
     const resultTexts = document.querySelectorAll('.result-text');
     resultTexts.forEach(el => {
-        if (el.textContent !== '—') {
-            el.style.opacity = '0.5';
-            el.style.transition = 'opacity 0.3s ease';
+        // Не анимируем закрепленные поля
+        const fieldName = getFieldNameFromId(el.id);
+        if (!fieldName || !lockedFields[fieldName] || !lockedFields[fieldName].locked) {
+            if (el.textContent !== '—') {
+                el.style.opacity = '0.5';
+                el.style.transition = 'opacity 0.3s ease';
+            }
         }
     });
     
@@ -277,91 +449,61 @@ const generateStatsOnly = () => {
 const generateCharacterWithStats = () => {
     const data = window.characterData;
     
-    // Анимация перед генерации
+    // Анимация перед генерации (только для незакрепленных полей)
     animateGeneration();
     
     // Генерация основной информации о персонаже
-    document.getElementById("char-name").textContent = getRandomElement(data.names);
+    document.getElementById("char-name").textContent = generateField('name', data.names);
     document.getElementById("char-race").textContent = generateRace();
     document.getElementById("char-class").textContent = generateClass();
-    document.getElementById("char-alignment").textContent = getRandomElement(data.alignments);
-    document.getElementById("char-backstory").textContent = getRandomElement(data.backstories);
+    document.getElementById("char-alignment").textContent = generateField('alignment', data.alignments);
+    document.getElementById("char-backstory").textContent = generateField('backstory', data.backstories);
     
-    // Черты характера (3 случайные без повторов)
-    const shuffledTraits = [...data.characterTraits].sort(() => 0.5 - Math.random());
-    const threeTraits = shuffledTraits.slice(0, 3).join(", ");
-    document.getElementById("feat-character").textContent = threeTraits;
+    // Черты характера
+    document.getElementById("feat-character").textContent = generateTraits();
     
     // Остальные черты
-    document.getElementById("feat-ideal").textContent = getRandomElement(data.ideals);
-    document.getElementById("feat-attachment").textContent = getRandomElement(data.attachments);
-    document.getElementById("feat-weakness").textContent = getRandomElement(data.weaknesses);
+    document.getElementById("feat-ideal").textContent = generateField('ideals', data.ideals);
+    document.getElementById("feat-attachment").textContent = generateField('attachments', data.attachments);
+    document.getElementById("feat-weakness").textContent = generateField('weakness', data.weaknesses);
     
     // Генерация характеристик
     generateStats();
     
+    // Восстанавливаем закрепленные значения (на случай, если они были перезаписаны)
+    restoreLockedFields();
+    
     console.log("Сгенерирован персонаж с характеристиками");
     console.log(`Раса: ${currentRace} (${currentSubrace})`);
-};
-
-// Основная функция генерации (выбирает в зависимости от переключателя)
-const generateCharacter = () => {
-    const generateStatsToggle = document.getElementById("generate-stats-toggle");
-    
-    if (generateStatsToggle.checked) {
-        // Если переключатель ВКЛ - генерируем ТОЛЬКО характеристики
-        generateStatsOnly();
-    } else {
-        // Если переключатель ВЫКЛ - генерируем персонажа С характеристиками
-        generateCharacterWithStats();
-    }
+    console.log(`Закреплено полей: ${lockedCount}`);
 };
 
 // Инициализация при загрузке страницы
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Генератор персонажей D&D загружен!");
-    console.log("Логика переключателя:");
-    console.log("- ВКЛ (checked): ТОЛЬКО характеристики (без генерации персонажа)");
-    console.log("- ВЫКЛ (unchecked): персонаж С характеристиками");
+    console.log("Новая функция: Закрепление полей!");
+    console.log("- Нажмите на замок 🔓 рядом с полем, чтобы закрепить его");
+    console.log("- Можно закрепить до 3 полей одновременно");
+    console.log("- Закрепленные поля не меняются при генерации");
     
-    // Кнопка генерации
-    document.getElementById("generate-btn").addEventListener("click", generateCharacter);
+    // Кнопка генерации персонажа
+    document.getElementById("generate-character-btn").addEventListener("click", generateCharacterWithStats);
     
-    // Обработчики кликов на характеристики
+    // Кнопка генерации только характеристик
+    document.getElementById("generate-stats-btn").addEventListener("click", generateStatsOnly);
+    
+    // Обработчики кликов на характеристики (только левая кнопка мыши)
     document.querySelectorAll('.stat-item').forEach(item => {
-        // ЛКМ
         item.addEventListener('click', handleStatClick);
-        // ПКМ
-        item.addEventListener('contextmenu', handleStatClick);
     });
     
-    // Переключатель
-    const toggle = document.getElementById("generate-stats-toggle");
-    const toggleText = document.querySelector('.toggle-text');
-    
-    // Функция обновления внешнего вида переключателя
-    const updateToggleAppearance = () => {
-        // Текст всегда остается "Генерация характеристик"
-        toggleText.textContent = "Генерация характеристик";
-        
-        if (toggle.checked) {
-            toggleText.style.color = '#c79a3a';
-            toggleText.style.textShadow = '0 0 5px rgba(199, 154, 58, 0.5)';
-        } else {
-            toggleText.style.color = '#f5e7a1';
-            toggleText.style.textShadow = 'none';
-        }
-    };
-    
-    // Обновляем при загрузке (переключатель по умолчанию выключен)
-    updateToggleAppearance();
-    
-    // Обновляем при изменении
-    toggle.addEventListener("change", function() {
-        updateToggleAppearance();
-        
-        const status = this.checked ? "ВКЛ: только характеристики" : "ВЫКЛ: персонаж с характеристиками";
-        console.log(`Режим генерации: ${status}`);
+    // Обработчики кликов на кнопки замков
+    document.querySelectorAll('.lock-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const field = btn.getAttribute('data-field');
+            toggleLockField(field);
+        });
     });
     
     // Показываем количество вариантов в консоли
@@ -374,9 +516,10 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(`Всего имён: ${data.names.length}`);
     console.log(`Всего предысторий: ${data.backstories.length}`);
     
-    // Генерация первого персонажа при загрузке (по умолчанию выключено - персонаж с характеристиками)
-    if (!toggle.checked) {
-        generateCharacterWithStats();
-        console.log("Автоматически сгенерирован первый персонаж");
-    }
+    // Инициализация счетчика закрепленных полей
+    updateLockedCounter();
+    
+    // Генерация первого персонажа при загрузке
+    generateCharacterWithStats();
+    console.log("Автоматически сгенерирован первый персонаж при загрузке страницы");
 });
