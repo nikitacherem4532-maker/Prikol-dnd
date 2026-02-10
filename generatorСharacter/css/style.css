@@ -152,10 +152,11 @@ main {
 .info-row {
     display: flex;
     margin: 10px 0;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
     position: relative;
-    min-height: 30px;
+    min-height: 40px;
+    padding-right: 40px; /* Место для кнопки замка */
 }
 
 .info-label {
@@ -177,13 +178,12 @@ main {
     color: #e8dcb8;
     text-align: left;
     line-height: 1.4;
-    padding-right: 35px; /* Место для кнопки замка */
 }
 
-/* Стили для кнопки замка */
+/* Стили для кнопки замка - ИСПРАВЛЕННЫЕ */
 .lock-btn {
     position: absolute;
-    right: 10px;
+    right: 0;
     top: 50%;
     transform: translateY(-50%);
     background: rgba(199, 154, 58, 0.2);
@@ -200,6 +200,9 @@ main {
     transition: all 0.3s ease;
     z-index: 2;
     padding: 0;
+    margin: 0;
+    box-shadow: none;
+    outline: none;
 }
 
 .lock-btn:hover {
@@ -423,7 +426,7 @@ footer {
     margin-top: auto;
 }
 
-/* Адаптивность для мобильных устройств */
+/* Адаптивность для мобильных устройств - ИСПРАВЛЕННЫЕ СТИЛИ */
 @media (max-width: 768px) {
     header {
         padding: 20px 15px;
@@ -483,38 +486,75 @@ footer {
     }
     
     .info-row {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row; /* Изменено с column на row */
+        align-items: center; /* Выравниваем по центру */
         gap: 5px;
         margin: 12px 0;
-        padding-right: 40px;
+        padding-right: 40px; /* Фиксированное место для кнопки замка */
         position: relative;
-        min-height: auto;
+        min-height: 40px; /* Фиксированная высота для всех строк */
     }
     
     .info-label {
-        min-width: 100%;
-        max-width: 100%;
+        min-width: 120px; /* Уменьшили ширину для мобильных */
+        max-width: 120px;
         text-align: left;
-        padding-right: 0;
+        padding-right: 5px;
         font-size: 0.95rem;
+        flex-shrink: 0;
     }
     
     .result-text {
         width: 100%;
         font-size: 1rem;
-        padding-left: 5px;
         padding-right: 0;
+        flex: 1;
+        min-width: 0;
     }
     
+    /* ИСПРАВЛЕННЫЕ СТИЛИ ДЛЯ КНОПКИ ЗАМКА В МОБИЛЬНОЙ ВЕРСИИ */
     .lock-btn {
         position: absolute;
         right: 0;
-        top: 0;
-        transform: none;
-        width: 25px;
-        height: 25px;
-        font-size: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 30px;
+        height: 30px;
+        font-size: 1.1rem;
+        background: rgba(199, 154, 58, 0.2);
+        border: 1px solid #c79a3a;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 2;
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Убираем эффекты hover для мобильных устройств */
+    .lock-btn:hover,
+    .lock-btn:active,
+    .lock-btn:focus {
+        transform: translateY(-50%); /* Фиксированное положение */
+        background: rgba(199, 154, 58, 0.2);
+        outline: none;
+        box-shadow: none;
+    }
+    
+    .lock-btn.locked {
+        background: rgba(199, 154, 58, 0.6);
+        border-color: #f5c95a;
+        color: #f5c95a;
+    }
+    
+    .lock-btn.locked:hover,
+    .lock-btn.locked:active,
+    .lock-btn.locked:focus {
+        transform: translateY(-50%); /* Фиксированное положение */
+        background: rgba(199, 154, 58, 0.6);
     }
     
     .stats-grid {
@@ -577,6 +617,11 @@ footer {
     
     .generator-section {
         padding: 15px 10px;
+    }
+    
+    .info-label {
+        min-width: 100px;
+        max-width: 100px;
     }
     
     .stats-grid {
